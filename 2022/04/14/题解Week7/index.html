@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Adament Cabin</title>
+    <title>题解Week7 - Adament Cabin</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Adament,"> 
-    
+    <meta name="description" content="
+7-1
+你刚从滑铁卢搬到了一个大城市，这里的人们讲一种难以理解的外语方言。幸运的是，你有一本字典来帮助你理解它们。
+输入格式:输入第一行是正整数N和M,后面是N行字典条目（最多10000条），然后,"> 
     <meta name="author" content="Adopac"> 
     <link rel="alternative" href="atom.xml" title="Adament Cabin" type="application/atom+xml"> 
     <link rel="icon" href="/img/Rin-1.png"> 
@@ -18,16 +21,22 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Adament Cabin"/>
-    
+    <meta name="twitter:title" content="题解Week7 - Adament Cabin"/>
+    <meta name="twitter:description" content="
+7-1
+你刚从滑铁卢搬到了一个大城市，这里的人们讲一种难以理解的外语方言。幸运的是，你有一本字典来帮助你理解它们。
+输入格式:输入第一行是正整数N和M,后面是N行字典条目（最多10000条），然后,"/>
     
     
     
     
     <meta property="og:site_name" content="Adament Cabin"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="Adament Cabin"/>
-    
+    <meta property="og:title" content="题解Week7 - Adament Cabin"/>
+    <meta property="og:description" content="
+7-1
+你刚从滑铁卢搬到了一个大城市，这里的人们讲一种难以理解的外语方言。幸运的是，你有一本字典来帮助你理解它们。
+输入格式:输入第一行是正整数N和M,后面是N行字典条目（最多10000条），然后,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -36,16 +45,34 @@
 <body class="loading">
     <span id="config-title" style="display:none">Adament Cabin</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week7</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
     </div>
+    <div class="scrollbar"></div>
+</div>
+
     <div class="section">
         <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                        <hr>
+    <div class='main'>
+        <h1 class="title">题解Week7</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
 <h1 id="7-1"><a href="#7-1" class="headerlink" title="7-1"></a>7-1</h1><blockquote>
 <p>你刚从滑铁卢搬到了一个大城市，这里的人们讲一种难以理解的外语方言。幸运的是，你有一本字典来帮助你理解它们。</p>
 <h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式:"></a>输入格式:</h3><p>输入第一行是正整数N和M,后面是N行字典条目（最多10000条），然后是M行要翻译的外语单词（最多10000个）。每一个字典条目都包含一个英语单词，后面跟着一个空格和一个外语单词。 输入中的每个单词都由最多10个小写字母组成。</p>
@@ -111,13 +138,40 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> dp[<span class="number">1505</span>][<span class="number">405</span>];</span><br><span class="line"><span class="type">int</span> value[<span class="number">405</span>],kilo[<span class="number">405</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> nimotsu;</span><br><span class="line">	<span class="type">int</span> maxkilo;</span><br><span class="line">	<span class="keyword">while</span>(cin&gt;&gt;nimotsu&gt;&gt;maxkilo)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">405</span>;i++)&#123;value[i]=<span class="number">0</span>;kilo[i]=<span class="number">0</span>;&#125;</span><br><span class="line">    	value[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    	kilo[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=nimotsu;i++) cin &gt;&gt; kilo[i];</span><br><span class="line">    	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=nimotsu;i++) cin &gt;&gt; value[i];</span><br><span class="line">    	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=maxkilo;i++) dp[i][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=nimotsu;i++) dp[<span class="number">0</span>][i]=<span class="number">0</span>;</span><br><span class="line">     	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=maxkilo;i++) &#123;</span><br><span class="line">    		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=nimotsu;j++) &#123;</span><br><span class="line">    			<span class="keyword">if</span>(kilo[j]&gt;i) dp[i][j]=dp[i][j<span class="number">-1</span>];</span><br><span class="line">    			<span class="keyword">else</span>&#123;</span><br><span class="line">    				<span class="keyword">if</span>(dp[i][j<span class="number">-1</span>]&gt;dp[i-kilo[j]][j<span class="number">-1</span>]+value[j]) dp[i][j]=dp[i][j<span class="number">-1</span>];</span><br><span class="line">    				<span class="keyword">else</span> dp[i][j]=dp[i-kilo[j]][j<span class="number">-1</span>]+value[j];</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">	cout &lt;&lt; dp[maxkilo][nimotsu] &lt;&lt; endl; </span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="审题不谨慎，debug两行泪。"><a href="#审题不谨慎，debug两行泪。" class="headerlink" title="审题不谨慎，debug两行泪。"></a><del>审题不谨慎，debug两行泪。</del></h5>
-                
-                </div>
-            </div>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
         </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
     </div>
+    
 </div>
 
+
+    </div>
+</div>
 </body>
 
 

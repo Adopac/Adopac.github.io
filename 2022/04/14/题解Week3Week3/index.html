@@ -5,12 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Adament Cabin</title>
+    <title>题解Week3(2) - Adament Cabin</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Adament,"> 
-    
+    <meta name="description" content="
+7-4
+人类正在经历一场生化危机，许多城市已经被病毒侵袭，这些城市中的人们为了避免感染病毒，计划开车逃往其他没有被病毒入侵的城市（安全城市）。有些城市之间有公路直达，有些没有。虽然他们知道哪些城市,"> 
     <meta name="author" content="Adopac"> 
     <link rel="alternative" href="atom.xml" title="Adament Cabin" type="application/atom+xml"> 
     <link rel="icon" href="/img/Rin-1.png"> 
@@ -18,16 +20,20 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Adament Cabin"/>
-    
+    <meta name="twitter:title" content="题解Week3(2) - Adament Cabin"/>
+    <meta name="twitter:description" content="
+7-4
+人类正在经历一场生化危机，许多城市已经被病毒侵袭，这些城市中的人们为了避免感染病毒，计划开车逃往其他没有被病毒入侵的城市（安全城市）。有些城市之间有公路直达，有些没有。虽然他们知道哪些城市,"/>
     
     
     
     
     <meta property="og:site_name" content="Adament Cabin"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="Adament Cabin"/>
-    
+    <meta property="og:title" content="题解Week3(2) - Adament Cabin"/>
+    <meta property="og:description" content="
+7-4
+人类正在经历一场生化危机，许多城市已经被病毒侵袭，这些城市中的人们为了避免感染病毒，计划开车逃往其他没有被病毒入侵的城市（安全城市）。有些城市之间有公路直达，有些没有。虽然他们知道哪些城市,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -36,16 +42,34 @@
 <body class="loading">
     <span id="config-title" style="display:none">Adament Cabin</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week3(2)</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
     </div>
+    <div class="scrollbar"></div>
+</div>
+
     <div class="section">
         <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                        <hr>
+    <div class='main'>
+        <h1 class="title">题解Week3(2)</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
 <h1 id="7-4"><a href="#7-4" class="headerlink" title="7-4"></a>7-4</h1><blockquote>
 <p>人类正在经历一场生化危机，许多城市已经被病毒侵袭，这些城市中的人们为了避免感染病毒，计划开车逃往其他没有被病毒入侵的城市（安全城市）。有些城市之间有公路直达，有些没有。虽然他们知道哪些城市是安全的，但是不知道有没有一条安全路径能够到达安全城市（只有该路径上经过的所有城市都是安全的，该路径才是安全路径）。请你编写一个程序帮助他们判断。</p>
 </blockquote>
@@ -111,13 +135,40 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> dx[<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span> dy[<span class="number">4</span>]=&#123;<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line"><span class="type">int</span> m[<span class="number">1005</span>][<span class="number">1005</span>];</span><br><span class="line"><span class="type">int</span> memo[<span class="number">1005</span>][<span class="number">1005</span>];</span><br><span class="line"><span class="type">int</span> blockarea[<span class="number">1000005</span>];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">point</span>&#123;</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">int</span> y;</span><br><span class="line">&#125;;</span><br><span class="line">queue&lt;point&gt; road;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,mm;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; mm;</span><br><span class="line">	<span class="type">char</span> chnu;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			cin &gt;&gt; chnu;</span><br><span class="line">			m[i][j]=chnu-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> block=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> nexty,nextx,startx,starty;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(memo[i][j]==<span class="number">0</span>)&#123;</span><br><span class="line">				block++;</span><br><span class="line">				<span class="type">int</span> sum=<span class="number">1</span>;</span><br><span class="line">				<span class="type">int</span> flag=<span class="number">0</span>;</span><br><span class="line">			<span class="comment">//	cin &gt;&gt; startx &gt;&gt; starty;</span></span><br><span class="line">				point start,next;</span><br><span class="line">				start.x=i;</span><br><span class="line">				start.y=j;</span><br><span class="line">				road.<span class="built_in">push</span>(start);</span><br><span class="line">				memo[i][j]=block;</span><br><span class="line">				<span class="keyword">while</span>(!road.<span class="built_in">empty</span>())&#123;</span><br><span class="line">					start=road.<span class="built_in">front</span>();</span><br><span class="line">					<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;<span class="number">4</span>;k++)&#123;</span><br><span class="line">						next.x=start.x+dx[k];</span><br><span class="line">						next.y=start.y+dy[k];</span><br><span class="line">						<span class="keyword">if</span>(next.x&lt;=n&amp;&amp;next.y&lt;=n&amp;&amp;next.x&gt;<span class="number">0</span>&amp;&amp;next.y&gt;<span class="number">0</span>&amp;&amp;m[next.x][next.y]!=m[start.x][start.y]&amp;&amp;memo[next.x][next.y]==<span class="number">0</span>)&#123;</span><br><span class="line">						<span class="comment">//	printf(&quot;Here I got %d %d\n&quot;,next.x,next.y);</span></span><br><span class="line">							road.<span class="built_in">push</span>(next);</span><br><span class="line">							memo[next.x][next.y]=block;</span><br><span class="line">							sum++;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">					road.<span class="built_in">pop</span>();</span><br><span class="line">				&#125;</span><br><span class="line">			<span class="comment">//	cout &lt;&lt; ans &lt;&lt; endl;</span></span><br><span class="line">				blockarea[block]=sum;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abs=<span class="number">1</span>;abs&lt;=mm;abs++)&#123;</span><br><span class="line">		cin &gt;&gt; startx &gt;&gt; starty;</span><br><span class="line">		cout &lt;&lt; blockarea[memo[startx][starty]] &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-                
-                </div>
-            </div>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
         </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
     </div>
+    
 </div>
 
+
+    </div>
+</div>
 </body>
 
 

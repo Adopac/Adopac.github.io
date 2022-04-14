@@ -5,12 +5,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Adament Cabin</title>
+    <title>题解Week1 - Adament Cabin</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Adament,"> 
-    
+    <meta name="description" content="
+7-1 String
+给定一个只含有小写字母的文本串，给定n个模式串，求每个模式串在文本串中的出现次数。
+
+我的做法是比较两个string：str和strr。 str是文本串，而strr是模式串 ,"> 
     <meta name="author" content="Adopac"> 
     <link rel="alternative" href="atom.xml" title="Adament Cabin" type="application/atom+xml"> 
     <link rel="icon" href="/img/Rin-1.png"> 
@@ -18,16 +22,24 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Adament Cabin"/>
-    
+    <meta name="twitter:title" content="题解Week1 - Adament Cabin"/>
+    <meta name="twitter:description" content="
+7-1 String
+给定一个只含有小写字母的文本串，给定n个模式串，求每个模式串在文本串中的出现次数。
+
+我的做法是比较两个string：str和strr。 str是文本串，而strr是模式串 ,"/>
     
     
     
     
     <meta property="og:site_name" content="Adament Cabin"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="Adament Cabin"/>
-    
+    <meta property="og:title" content="题解Week1 - Adament Cabin"/>
+    <meta property="og:description" content="
+7-1 String
+给定一个只含有小写字母的文本串，给定n个模式串，求每个模式串在文本串中的出现次数。
+
+我的做法是比较两个string：str和strr。 str是文本串，而strr是模式串 ,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -36,16 +48,34 @@
 <body class="loading">
     <span id="config-title" style="display:none">Adament Cabin</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week1</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
     </div>
+    <div class="scrollbar"></div>
+</div>
+
     <div class="section">
         <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                        <hr>
+    <div class='main'>
+        <h1 class="title">题解Week1</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
 <h1 id="7-1-String"><a href="#7-1-String" class="headerlink" title="7-1 String"></a>7-1 String</h1><blockquote>
 <p>给定一个只含有小写字母的文本串，给定<em>n</em>个模式串，求每个模式串在文本串中的出现次数。</p>
 </blockquote>
@@ -98,13 +128,40 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,T;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; T;</span><br><span class="line">	<span class="type">int</span> time[n],happy[n];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) cin &gt;&gt; happy[i] &gt;&gt; time[i];</span><br><span class="line">	<span class="type">bool</span> flag=<span class="literal">false</span>;<span class="comment">//定义第一个最小数字</span></span><br><span class="line">    <span class="comment">//可以happymax=-999999(应该</span></span><br><span class="line">	<span class="type">int</span> happymax,happymagic;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(time[i]&lt;=T) happymagic=happy[i];</span><br><span class="line">		<span class="keyword">else</span> happymagic=happy[i]-(time[i]-T);</span><br><span class="line">		<span class="keyword">if</span>(flag==<span class="literal">false</span>) &#123;happymax=happymagic;flag=<span class="literal">true</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(happymagic&gt;happymax) happymax=happymagic;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; happymax &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-                
-                </div>
-            </div>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
         </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
     </div>
+    
 </div>
 
+
+    </div>
+</div>
 </body>
 
 
