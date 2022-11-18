@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>题解Week2 - Adament Houseboat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Adament,"> 
+    <meta name="description" content="
+7-1 汉诺塔问题
+给定一个由n个圆盘组成的塔，这些圆盘按照大小递减的方式套在第一根桩柱上。现要将整个塔移动到另一根桩柱上，每次只能移动一个圆盘，且较大的圆盘在移动过程中不能放置在较小的圆盘上面。,"> 
+    <meta name="author" content="Adopac"> 
+    <link rel="alternative" href="atom.xml" title="Adament Houseboat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/Rin-1.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="题解Week2 - Adament Houseboat"/>
+    <meta name="twitter:description" content="
+7-1 汉诺塔问题
+给定一个由n个圆盘组成的塔，这些圆盘按照大小递减的方式套在第一根桩柱上。现要将整个塔移动到另一根桩柱上，每次只能移动一个圆盘，且较大的圆盘在移动过程中不能放置在较小的圆盘上面。,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Adament Houseboat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="题解Week2 - Adament Houseboat"/>
+    <meta property="og:description" content="
+7-1 汉诺塔问题
+给定一个由n个圆盘组成的塔，这些圆盘按照大小递减的方式套在第一根桩柱上。现要将整个塔移动到另一根桩柱上，每次只能移动一个圆盘，且较大的圆盘在移动过程中不能放置在较小的圆盘上面。,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Adament Houseboat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week2</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">题解Week2</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
+<h1 id="7-1-汉诺塔问题"><a href="#7-1-汉诺塔问题" class="headerlink" title="7-1 汉诺塔问题"></a>7-1 汉诺塔问题</h1><blockquote>
+<p>给定一个由n个圆盘组成的塔，这些圆盘按照大小递减的方式套在第一根桩柱上。现要将整个塔移动到另一根桩柱上，每次只能移动一个圆盘，且较大的圆盘在移动过程中不能放置在较小的圆盘上面。</p>
+</blockquote>
+<p>经典递归题目。</p>
+<p>可以参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Hk4y1k7KL?from=search&seid=14212635478384989118&spm_id_from=333.337.0.0">bilibili视频</a>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Hanoi</span><span class="params">(<span class="type">int</span> n,string a,string b,string c)</span></span>&#123;<span class="comment">//将n个塔从a经过b移动到c，中间这个b看起来没啥用，其实是传入了中间柱这个概念www</span></span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>) &#123;cout &lt;&lt; a &lt;&lt; <span class="string">&quot;-&gt;&quot;</span> &lt;&lt; c &lt;&lt; endl;<span class="keyword">return</span>;&#125;<span class="comment">//只有一个盘时很好移动</span></span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">Hanoi</span>(n<span class="number">-1</span>,a,c,b);<span class="comment">//将n-1个盘子从a移动到b</span></span><br><span class="line">        cout &lt;&lt; a &lt;&lt; <span class="string">&quot;-&gt;&quot;</span> &lt;&lt; c &lt;&lt; endl;<span class="comment">//再把第n个盘子从a移动到c处</span></span><br><span class="line">        <span class="built_in">Hanoi</span>(n<span class="number">-1</span>,b,a,c);<span class="comment">//n-1个盘子归位，从b移动到c</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> m;</span><br><span class="line">    cin &gt;&gt; m;</span><br><span class="line">    string a,b,c;</span><br><span class="line">    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">    <span class="built_in">Hanoi</span>(m,a,b,c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-2-分而治之"><a href="#7-2-分而治之" class="headerlink" title="7-2  分而治之"></a>7-2  分而治之</h1><p><font color=grey><del>不是啊这道题我没用分治啊这</del></font></p>
+<blockquote>
+<p>分而治之，各个击破是兵家常用的策略之一。在战争中，我们希望首先攻下敌方的部分城市，使其剩余的城市变成孤立无援，然后再分头各个击破。为此参谋部提供了若干打击方案。本题就请你编写程序，判断每个方案的可行性。</p>
+</blockquote>
+<p>这道题我一开始用了二维数组然后段错误了我&amp;^#*。</p>
+<p>因为二维数组a[10005][10005]容易内存损耗太大。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> city[<span class="number">10005</span>][<span class="number">10005</span>],citytest[<span class="number">10005</span>][<span class="number">10005</span>];<span class="comment">//爆了啦</span></span><br><span class="line"><span class="type">int</span> survive[<span class="number">10005</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> N,M,r1,r2,K,Np,bc,flag;</span><br><span class="line">	cin &gt;&gt; N &gt;&gt; M;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=N;i++) <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=N;j++) city[i][j]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=N;i++) survive[i]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">1</span>;abc&lt;=M;abc++)&#123;</span><br><span class="line">		cin &gt;&gt; r1 &gt;&gt; r2;</span><br><span class="line">		city[r1][r2]=<span class="number">1</span>;</span><br><span class="line">		city[r2][r1]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	cin &gt;&gt; K;</span><br><span class="line"><span class="comment">//	cout &lt;&lt; &quot;This is K &quot; &lt;&lt; K &lt;&lt; endl;</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">1</span>;abc&lt;=K;abc++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=N;i++) <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=N;j++) citytest[i][j]=city[i][j];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=N;i++) survive[i]=<span class="number">1</span>;</span><br><span class="line"><span class="comment">//        cout &lt;&lt; &quot;This is the &quot; &lt;&lt; abc &lt;&lt; &quot; Time to attack!&quot; &lt;&lt; endl;</span></span><br><span class="line">		cin&gt;&gt;Np;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> defg=<span class="number">1</span>;defg&lt;=Np;defg++)&#123;</span><br><span class="line">			cin &gt;&gt; bc;</span><br><span class="line">			survive[bc]=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=N;i++) citytest[i][bc]=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		flag=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=N;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(survive[i]!=<span class="number">0</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=N;j++)&#123;</span><br><span class="line">					<span class="keyword">if</span>(citytest[i][j]!=<span class="number">0</span>) &#123;flag=<span class="number">0</span>;<span class="keyword">break</span>;&#125; </span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span>(flag==<span class="number">0</span>) &#123;cout &lt;&lt; <span class="string">&quot;NO&quot;</span> &lt;&lt; endl;<span class="keyword">break</span>;&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag==<span class="number">1</span>) cout &lt;&lt; <span class="string">&quot;YES&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我的想法是bool a[城市编号][连接的城市]这个想法，然后我要去优化它，我觉得用二维数组存储两个城市之间的路耗费内存太大，于是我用vector来储存连接的城市。<del>暴力破解是不可能优化的。</del></p>
+<p>第二是我用了citytest和city两个数组，因为我不想改变city数组。同样占据太大内存，于是我使用了检测而不是改变来进行操作。于是就有：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> survive[<span class="number">10005</span>];<span class="comment">//城市状态</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; city[<span class="number">10005</span>];<span class="comment">//一个vector的二维数组</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> N,M,r1,r2,K,Np,bc,flag;</span><br><span class="line">	cin &gt;&gt; N &gt;&gt; M;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=N;i++) survive[i]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">1</span>;abc&lt;=M;abc++)&#123;</span><br><span class="line">		cin &gt;&gt; r1 &gt;&gt; r2;</span><br><span class="line">		city[r1].<span class="built_in">push_back</span>(r2);<span class="comment">//同之前，一个存编号一个存连接的编号</span></span><br><span class="line">		city[r2].<span class="built_in">push_back</span>(r1);	</span><br><span class="line">	&#125;</span><br><span class="line">	cin &gt;&gt; K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">1</span>;abc&lt;=K;abc++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=N;i++) survive[i]=<span class="number">1</span>;</span><br><span class="line">		cin&gt;&gt;Np;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> defg=<span class="number">1</span>;defg&lt;=Np;defg++)&#123;</span><br><span class="line">			cin &gt;&gt; bc;</span><br><span class="line">			survive[bc]=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		flag=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=N;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(survive[i]!=<span class="number">0</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;city[i].<span class="built_in">size</span>();j++)&#123;</span><br><span class="line">					<span class="keyword">if</span>(survive[city[i][j]]==<span class="number">1</span>)&#123;<span class="comment">//检测连接的城市是否炸了</span></span><br><span class="line">						flag=<span class="number">0</span>;<span class="comment">//没炸就NO</span></span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(flag==<span class="number">0</span>) &#123;cout &lt;&lt; <span class="string">&quot;NO&quot;</span> &lt;&lt; endl; <span class="keyword">break</span>;&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag==<span class="number">1</span>) cout &lt;&lt; <span class="string">&quot;YES&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当时用gdb来debug：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gdb example</span><br><span class="line">b 29</span><br><span class="line">b 35</span><br><span class="line">display flag</span><br><span class="line">display city[i][j]</span><br><span class="line">display survive[i]</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-3-归并排序"><a href="#7-3-归并排序" class="headerlink" title="7-3 归并排序"></a>7-3 归并排序</h1><p>就是归并排序。</p>
+<p>可以参考：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=COk73cpQbFQ">Youtube视频</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ax411U7Xx">Bilibili视频</a>。</p>
+<p><font color=grey><del>这玩意儿太难了要递归要分治wsl</del></font></p>
+<p>不多说：</p>
+<p>倘若有俩数组 2 4 6 8和1 3 9 10</p>
+<p>设为a0 a1 a2 a3和b0 b1 b2 b3</p>
+<p>将这两个数组按照顺序合并为一个数组，就是分治中的合。</p>
+<p>比较a0和b0，发现b0更小，使得ma0&lt;–b0，同时b的下标和ma的下标增加一。</p>
+<p>比较a0和b1，发现a0更小，使得ma1&lt;–a0，同时a的下标和ma的下表增加一。</p>
+<p>以此类推。</p>
+<p>最终a3被输入进ma数组，此时b还剩下两个数字，将b输入到ma里即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Merge</span><span class="params">(<span class="type">int</span> ma[],<span class="type">int</span> L,<span class="type">int</span> M,<span class="type">int</span> R)</span></span>&#123;<span class="comment">//将两个数组ma(L-M)和ma(M-R)数组按顺序合并</span></span><br><span class="line">	<span class="type">int</span> leftsize=M-L;<span class="comment">//左边数组的长度</span></span><br><span class="line">	<span class="type">int</span> rightsize=R-M+<span class="number">1</span>;<span class="comment">//右边数组的长度</span></span><br><span class="line">	<span class="type">int</span> leftarray[leftsize],rightarray[rightsize];<span class="comment">//这是定义的两个数组原来是ma(L-M)和ma(M-R)</span></span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=L;i&lt;M;i++) &#123;</span><br><span class="line">		leftarray[i-L]=ma[i];<span class="comment">//将数字输入两个数组</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(i=M;i&lt;=R;i++) &#123;</span><br><span class="line">		rightarray[i-M]=ma[i];<span class="comment">//通上</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> k=L,j=<span class="number">0</span>;i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;leftsize&amp;&amp;j&lt;rightsize)&#123;<span class="comment">//开始按顺序写入新的ma数组</span></span><br><span class="line">		<span class="keyword">if</span>(leftarray[i]&lt;rightarray[j]) &#123;</span><br><span class="line">			ma[k]=leftarray[i];k++;i++;</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			ma[k]=rightarray[j];k++;j++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;leftsize)&#123;ma[k]=leftarray[i];i++;k++;&#125;<span class="comment">//写入剩下的</span></span><br><span class="line">	<span class="keyword">while</span>(j&lt;rightsize)&#123;ma[k]=rightarray[j];j++;k++;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Mergesort</span><span class="params">(<span class="type">int</span> m[],<span class="type">int</span> L,<span class="type">int</span> R)</span></span>&#123;<span class="comment">//体现分治和归并的函数</span></span><br><span class="line">	<span class="keyword">if</span>(L==R) <span class="keyword">return</span>;<span class="comment">//返回条件，数组中仅有1个数</span></span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="type">int</span> mid=(R+L)/<span class="number">2</span>;<span class="comment">//拆分两个数组</span></span><br><span class="line">		<span class="built_in">Mergesort</span>(m,L,mid);<span class="comment">//拆分左侧，计算左侧，合并左侧</span></span><br><span class="line">		<span class="built_in">Mergesort</span>(m,mid+<span class="number">1</span>,R);<span class="comment">//拆分右侧，计算右侧，合并右侧</span></span><br><span class="line">		<span class="built_in">Merge</span>(m,L,mid+<span class="number">1</span>,R);<span class="comment">//合并左右侧</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> T,nu;</span><br><span class="line">	cin &gt;&gt; T;</span><br><span class="line">	<span class="type">int</span> a[T];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">0</span>;abc&lt;T;abc++)&#123;cin &gt;&gt; nu;a[abc]=nu;&#125;</span><br><span class="line">	<span class="built_in">Mergesort</span>(a,<span class="number">0</span>,T<span class="number">-1</span>);<span class="comment">//耶,楽しい。</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">0</span>;abc&lt;T;abc++)&#123;cout &lt;&lt; a[abc] &lt;&lt; <span class="string">&quot; &quot;</span>;&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><del>最好玩的就是那个Mergesort函数了。</del></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b07feb5446e63296f5ad"
+        data-cs="5718dbac3072f68b17e9891e992406a87c412c71"
+        data-r="adopac.github.io"
+        data-o="Adopac"
+        data-a="Adopac"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7-1-%E6%B1%89%E8%AF%BA%E5%A1%94%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">7-1 汉诺塔问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-2-%E5%88%86%E8%80%8C%E6%B2%BB%E4%B9%8B"><span class="toc-number">2.</span> <span class="toc-text">7-2  分而治之</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-3-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">3.</span> <span class="toc-text">7-3 归并排序</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

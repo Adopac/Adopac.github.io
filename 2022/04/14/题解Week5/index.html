@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>题解Week5 - Adament Houseboat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Adament,"> 
+    <meta name="description" content="
+7-1  愿天下有情人都是失散多年的兄妹这谁出的题啊这么诅咒人&amp;#x2F;xyx
+
+呵呵。大家都知道五服以内不得通婚，即两个人最近的共同祖先如果在五代以内（即本人、父母、祖父母、曾祖父母、高祖父母,"> 
+    <meta name="author" content="Adopac"> 
+    <link rel="alternative" href="atom.xml" title="Adament Houseboat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/Rin-1.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="题解Week5 - Adament Houseboat"/>
+    <meta name="twitter:description" content="
+7-1  愿天下有情人都是失散多年的兄妹这谁出的题啊这么诅咒人&amp;#x2F;xyx
+
+呵呵。大家都知道五服以内不得通婚，即两个人最近的共同祖先如果在五代以内（即本人、父母、祖父母、曾祖父母、高祖父母,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Adament Houseboat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="题解Week5 - Adament Houseboat"/>
+    <meta property="og:description" content="
+7-1  愿天下有情人都是失散多年的兄妹这谁出的题啊这么诅咒人&amp;#x2F;xyx
+
+呵呵。大家都知道五服以内不得通婚，即两个人最近的共同祖先如果在五代以内（即本人、父母、祖父母、曾祖父母、高祖父母,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Adament Houseboat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week5</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">题解Week5</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
+<h1 id="7-1-愿天下有情人都是失散多年的兄妹"><a href="#7-1-愿天下有情人都是失散多年的兄妹" class="headerlink" title="7-1  愿天下有情人都是失散多年的兄妹"></a>7-1  <strong>愿天下有情人都是失散多年的兄妹</strong></h1><p><del>这谁出的题啊这么诅咒人&#x2F;xyx</del></p>
+<blockquote>
+<p>呵呵。大家都知道五服以内不得通婚，即两个人最近的共同祖先如果在五代以内（即本人、父母、祖父母、曾祖父母、高祖父母）则不可通婚。本题就请你帮助一对有情人判断一下，他们究竟是否可以成婚？</p>
+</blockquote>
+<p>这道题debug了我很久：</p>
+<p>有以下误区注意下：</p>
+<p>1、父母可以结婚。</p>
+<p>2、ID不一定按照顺序。</p>
+<p>3、数组开大点。</p>
+<p><del>不要在意奇特的变量名</del></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">people</span>&#123;</span><br><span class="line">	<span class="type">int</span> ID;</span><br><span class="line">	<span class="type">char</span> SEX;</span><br><span class="line">	<span class="type">int</span> F_ID;</span><br><span class="line">	<span class="type">int</span> M_ID;</span><br><span class="line">&#125;human[<span class="number">1000005</span>];<span class="comment">//保存一个人的信息</span></span><br><span class="line"><span class="type">int</span> ans;<span class="comment">// 没用</span></span><br><span class="line"><span class="type">int</span> NUM;<span class="comment">//不需要全局</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt;brotheryourfather;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;sisteryourfather;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">brothersearchyourfather</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> fullnum,<span class="type">int</span> ans)</span></span>&#123;</span><br><span class="line"><span class="comment">//	printf(&quot;BROTHER Searching at %d with ans is %d\n&quot;,n,ans);</span></span><br><span class="line">	<span class="keyword">if</span>(ans==<span class="number">5</span>||n==<span class="number">-1</span>||n&lt;=<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(human[n].F_ID!=<span class="number">-1</span>) brotheryourfather.<span class="built_in">push_back</span>(human[n].F_ID);</span><br><span class="line">		<span class="keyword">if</span>(human[n].M_ID!=<span class="number">-1</span>) brotheryourfather.<span class="built_in">push_back</span>(human[n].M_ID);</span><br><span class="line">		<span class="built_in">brothersearchyourfather</span>(human[n].F_ID,fullnum,ans+<span class="number">1</span>);<span class="comment">//递归查找父母</span></span><br><span class="line">		<span class="built_in">brothersearchyourfather</span>(human[n].M_ID,fullnum,ans+<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sistersearchyourfather</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> fullnum,<span class="type">int</span> ans)</span></span>&#123;<span class="comment">//和上面一样（凑行数（bushi</span></span><br><span class="line">	<span class="keyword">if</span>(ans==<span class="number">5</span>||n==<span class="number">-1</span>||n&lt;=<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(human[n].F_ID!=<span class="number">-1</span>) sisteryourfather.<span class="built_in">push_back</span>(human[n].F_ID);</span><br><span class="line">		<span class="keyword">if</span>(human[n].M_ID!=<span class="number">-1</span>) sisteryourfather.<span class="built_in">push_back</span>(human[n].M_ID);</span><br><span class="line">		<span class="built_in">sistersearchyourfather</span>(human[n].F_ID,fullnum,ans+<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">sistersearchyourfather</span>(human[n].M_ID,fullnum,ans+<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> NUM;</span><br><span class="line">	cin &gt;&gt; NUM;</span><br><span class="line">	<span class="type">int</span> SelfID;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">1000000</span>;i++)&#123;</span><br><span class="line">		human[i].F_ID=<span class="number">-1</span>;</span><br><span class="line">		human[i].M_ID=<span class="number">-1</span>;</span><br><span class="line">		human[i].SEX=<span class="string">&#x27;N&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=NUM;i++)&#123;</span><br><span class="line">		cin &gt;&gt; SelfID;</span><br><span class="line">		human[SelfID].ID=SelfID;</span><br><span class="line">		cin &gt;&gt; human[SelfID].SEX &gt;&gt; human[SelfID].F_ID &gt;&gt; human[SelfID].M_ID;</span><br><span class="line">		<span class="keyword">if</span>(human[SelfID].F_ID&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">			human[human[SelfID].F_ID].ID=human[SelfID].F_ID;</span><br><span class="line">			human[human[SelfID].F_ID].SEX=<span class="string">&#x27;M&#x27;</span>;</span><br><span class="line">		&#125;		</span><br><span class="line">		<span class="keyword">if</span>(human[SelfID].M_ID&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">			human[human[SelfID].M_ID].ID=human[SelfID].M_ID;</span><br><span class="line">			human[human[SelfID].M_ID].SEX=<span class="string">&#x27;F&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> gan;</span><br><span class="line">	cin &gt;&gt; gan;</span><br><span class="line">	<span class="type">int</span> brother,sister;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">1</span>;abc&lt;=gan;abc++)&#123;</span><br><span class="line">		cin &gt;&gt; brother &gt;&gt; sister;</span><br><span class="line">		<span class="keyword">if</span>(human[brother].SEX==human[sister].SEX) &#123;cout &lt;&lt; <span class="string">&quot;Never Mind&quot;</span> &lt;&lt; endl;<span class="keyword">continue</span>;&#125;</span><br><span class="line">		brotheryourfather.<span class="built_in">clear</span>();</span><br><span class="line">		sisteryourfather.<span class="built_in">clear</span>();</span><br><span class="line">		<span class="built_in">brothersearchyourfather</span>(human[brother].ID,NUM,<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">sistersearchyourfather</span>(human[sister].ID,NUM,<span class="number">1</span>);</span><br><span class="line">		<span class="type">bool</span> flag=<span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;brotheryourfather.<span class="built_in">size</span>();i++)&#123;<span class="comment">//比较两个vector</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;sisteryourfather.<span class="built_in">size</span>();j++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(brotheryourfather[i]==sisteryourfather[j]&amp;&amp;brotheryourfather[i]!=<span class="number">0</span>&amp;&amp;sisteryourfather[i]!=<span class="number">0</span>)&#123;flag=<span class="literal">false</span>;<span class="keyword">break</span>;&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag)&#123;cout &lt;&lt; <span class="string">&quot;Yes&quot;</span> &lt;&lt; endl;<span class="keyword">continue</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;cout &lt;&lt; <span class="string">&quot;No&quot;</span> &lt;&lt; endl;<span class="keyword">continue</span>;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-2"><a href="#7-2" class="headerlink" title="7-2"></a>7-2</h1><blockquote>
+<p>X遇到一个关于素数的问题需要你这位大牛帮他解决。素数（prime number）又称质数。一个大于1的自然数，除了1和它本身外，不能整除以其他自然数，换句话说就是该数除了1和它本身以外不再有其他的因数，否则称为合数。哥德巴赫是德国数学家。出生于格奥尼格斯别尔格（现名加里宁城）。曾在英国牛津大学学习。原学法学，由于在欧洲各国访问期间结识了贝努利家族，所以对数学研究产生了兴趣。曾担任中学教师。1725年，到了俄国，同年被选为彼得堡科学院院士。1725年~1740年担任彼得堡科学院会议秘书。1742年，移居莫斯科，并在俄国外交部任职。1742年，哥德巴赫在教学中发现，每个不小于6的偶数都是两个素数之和。如6＝3＋3，14＝3＋11等等。公元1742年6月7日哥德巴赫写信给当时的大数学家欧拉，欧拉在6月30日给他的回信中说，他相信这个猜想是正确的，但他不能证明。叙述如此简单的问题，连欧拉这样首屈一指的数学家都不能证明，这个猜想便引起了许多数学家的注意。我们不需要你去证明哥德巴赫猜想。我们假设哥德巴赫猜想是正确的，一个不小于6的偶数，都是两个素数之和。例如14＝3＋11，也可以表示为14&#x3D;7+7。现在的问题是给定一个正整数N，求N是最少几个素数的和。。</p>
+</blockquote>
+<p>这是一道数学题。</p>
+<p>可以判断出来：</p>
+<ul>
+<li><p>任何一个偶数可以拆成两个奇数，只要这两个奇数加起来等于偶数，必能找到两个两个素数。</p>
+</li>
+<li><p>一个奇数如果是素数，则就是它本身。</p>
+</li>
+<li><p>一个奇数如果不是素书，如果它不能拆为2+(素数-2)的形式，只能拆为奇数+偶数，而一个偶数必能拆为两个素数，所以是3个数。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isprime</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&lt;=<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=<span class="built_in">sqrt</span>(n);i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(n%i==<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> N,n;</span><br><span class="line">	cin &gt;&gt; N;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> abc=<span class="number">1</span>;abc&lt;=N;abc++)&#123;</span><br><span class="line">		<span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">		cin &gt;&gt; n;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">isprime</span>(n))&#123;sum=<span class="number">1</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(n%<span class="number">2</span>==<span class="number">0</span>)&#123;sum=<span class="number">2</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">isprime</span>(n<span class="number">-2</span>))&#123;sum=<span class="number">2</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;sum=<span class="number">3</span>;&#125;</span><br><span class="line">		cout &lt;&lt; sum &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-3"><a href="#7-3" class="headerlink" title="7-3"></a>7-3</h1><blockquote>
+<p>编写程序对给定的有向图（不一定连通）进行深度优先遍历，图中包含n个顶点，编号为0至n-1。本题限定在深度优先遍历过程中，如果同时出现多个待访问的顶点，则优先选择编号最小的一个进行访问，以顶点0为遍历起点。</p>
+</blockquote>
+<p>图遍历</p>
+<p>注意是有向图，啊啊啊我在这卡了好久QAQ。</p>
+<p>还要注意不一定连通。</p>
+<p>用DFS便利即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; num[<span class="number">20005</span>];</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; leaves;</span><br><span class="line"><span class="type">int</span> vis[<span class="number">20005</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(vis[n]==<span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">if</span>(vis[n]==<span class="number">0</span>)&#123;vis[n]=<span class="number">1</span>;leaves.<span class="built_in">push_back</span>(n);&#125;</span><br><span class="line"><span class="comment">//	cout &lt;&lt; &quot;P Search at &quot;&lt;&lt; n &lt;&lt; endl; </span></span><br><span class="line">    <span class="keyword">if</span>(num[n].<span class="built_in">size</span>()==<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;num[n].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">    		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;num[n].<span class="built_in">size</span>()<span class="number">-1</span>;j++)&#123;</span><br><span class="line">    			<span class="keyword">if</span>(num[n][j]&gt;num[n][j+<span class="number">1</span>]) <span class="built_in">swap</span>(num[n][j],num[n][j+<span class="number">1</span>]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;num[n].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        	<span class="built_in">dfs</span>(num[n][i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,e;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; e;</span><br><span class="line">    <span class="type">int</span> e1,e2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> abs=<span class="number">0</span>;abs&lt;e;abs++)&#123;</span><br><span class="line">        cin &gt;&gt; e1 &gt;&gt; e2;</span><br><span class="line">    <span class="comment">//    if(e1&gt;e2) swap(e1,e2);//注意是有向图，这句话不应该加。</span></span><br><span class="line">        num[e1].<span class="built_in">push_back</span>(e2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="built_in">dfs</span>(i);</span><br><span class="line">	&#125;</span><br><span class="line">    leaves[<span class="number">0</span>]=<span class="number">0</span>;;</span><br><span class="line">    <span class="type">bool</span> first=<span class="literal">true</span>;</span><br><span class="line">    <span class="type">int</span> op;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;leaves.<span class="built_in">size</span>();i++) cout &lt;&lt; leaves[i] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-4"><a href="#7-4" class="headerlink" title="7-4"></a>7-4</h1><blockquote>
+<p><strong>Drizzle</strong> 前往山地统计大山的数目，现在收到这片区域的地图，地图中用<code>0（平地）</code>和<code>1（山峰）</code>绘制而成，请你帮忙计算其中的大山数目<br>山总是被平地<strong>四面</strong>包围着，每一座山只能在水平或垂直方向上连接相邻的山峰而形成。一座山峰四面被平地包围，这个山峰也算一个大山<br>另外，你可以假设地图的四面都被平地包围着。</p>
+</blockquote>
+<p>这道题用广度优先搜索可解（应该</p>
+<p>因为广度优先就像是往纸上滴水，扩展的，可以判定非山为边界，把BFS所到之处全部标为访问后，计算山的数量。因为边界不大，可以手动遍历所有点，遇到访问的直接跳，来寻找下一座大山。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> _map[<span class="number">2005</span>][<span class="number">2005</span>];</span><br><span class="line"><span class="type">int</span> vis[<span class="number">2005</span>][<span class="number">2005</span>];</span><br><span class="line"><span class="type">int</span> dx[<span class="number">4</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>&#125;;</span><br><span class="line"><span class="type">int</span> dy[<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">point</span>&#123;</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">int</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> mountain=<span class="number">0</span>;</span><br><span class="line">queue&lt;point&gt; que;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> M,N;</span><br><span class="line">	cin &gt;&gt; M &gt;&gt; N;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=M;i++) <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=N;j++) cin &gt;&gt; _map[i][j];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=M;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=N;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(vis[i][j]==<span class="number">0</span>&amp;&amp;_map[i][j]==<span class="number">1</span>)&#123;</span><br><span class="line">				point start;</span><br><span class="line">				start.x=i;</span><br><span class="line">				start.y=j;</span><br><span class="line">				que.<span class="built_in">push</span>(start);</span><br><span class="line">				vis[start.x][start.y]=<span class="number">1</span>;</span><br><span class="line">				<span class="keyword">while</span>(!que.<span class="built_in">empty</span>())&#123;</span><br><span class="line">					start=que.<span class="built_in">front</span>();</span><br><span class="line">					point next;</span><br><span class="line">					<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;<span class="number">4</span>;k++)&#123;</span><br><span class="line">						next.x=start.x+dx[k];</span><br><span class="line">						next.y=start.y+dy[k];</span><br><span class="line">						<span class="keyword">if</span>(_map[next.x][next.y]==<span class="number">1</span>&amp;&amp;vis[next.x][next.y]==<span class="number">0</span>)&#123;</span><br><span class="line">							que.<span class="built_in">push</span>(next);</span><br><span class="line">							vis[next.x][next.y]=<span class="number">1</span>;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">					que.<span class="built_in">pop</span>();</span><br><span class="line">				&#125;</span><br><span class="line">				mountain++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; mountain &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-5"><a href="#7-5" class="headerlink" title="7-5"></a>7-5</h1><blockquote>
+<p>Drizzle 被困到一条充满数字的方块路中，假设这条路由一个非负的整数数组<code>m</code>组成，Drizzle 最开始的位置在下标 <code>start</code> 处，当他位于下标<code>i</code>位置时可以向前或者向后跳跃<code>m[i]</code>步数，已知元素值为<code>0</code>处的位置是出口，且只能通过出口出去，不可能数组越界，请你通过编程计算出Drizzle能否逃出这里。</p>
+</blockquote>
+<p>这道题可以直接从start开始递归，出不去的条件是无论怎么走，都只能返回已经访问的点，也就是说陷入了死循环，知道这一点就很好写了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> vis[<span class="number">50005</span>];</span><br><span class="line"><span class="type">int</span> m[<span class="number">50005</span>];</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">bool</span> getout=<span class="literal">false</span>;</span><br><span class="line"><span class="type">bool</span> deadloop=<span class="literal">false</span>;<span class="comment">//没用</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">jump</span><span class="params">(<span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(vis[p]==<span class="number">1</span>||p&lt;<span class="number">0</span>||p&gt;=n) <span class="keyword">return</span>;</span><br><span class="line">	vis[p]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(m[p]==<span class="number">0</span>||getout==<span class="literal">true</span>)&#123;getout=<span class="literal">true</span>;<span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p+m[p]&gt;=<span class="number">0</span>&amp;&amp;p+m[p]&lt;n) <span class="built_in">jump</span>(p+m[p]);</span><br><span class="line">        <span class="keyword">if</span>(p-m[p]&gt;=<span class="number">0</span>&amp;&amp;p-m[p]&lt;n) <span class="built_in">jump</span>(p-m[p]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) cin &gt;&gt; m[i];</span><br><span class="line">    <span class="type">int</span> start;</span><br><span class="line">    vis[start]=<span class="number">1</span>;</span><br><span class="line">    cin &gt;&gt; start;</span><br><span class="line">    <span class="built_in">jump</span>(start);</span><br><span class="line">    <span class="keyword">if</span>(getout==<span class="literal">true</span>) cout &lt;&lt; <span class="string">&quot;True&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(getout==<span class="literal">false</span>) cout &lt;&lt; <span class="string">&quot;False&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b07feb5446e63296f5ad"
+        data-cs="5718dbac3072f68b17e9891e992406a87c412c71"
+        data-r="adopac.github.io"
+        data-o="Adopac"
+        data-a="Adopac"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7-1-%E6%84%BF%E5%A4%A9%E4%B8%8B%E6%9C%89%E6%83%85%E4%BA%BA%E9%83%BD%E6%98%AF%E5%A4%B1%E6%95%A3%E5%A4%9A%E5%B9%B4%E7%9A%84%E5%85%84%E5%A6%B9"><span class="toc-number">1.</span> <span class="toc-text">7-1  愿天下有情人都是失散多年的兄妹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-2"><span class="toc-number">2.</span> <span class="toc-text">7-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-3"><span class="toc-number">3.</span> <span class="toc-text">7-3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-4"><span class="toc-number">4.</span> <span class="toc-text">7-4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-5"><span class="toc-number">5.</span> <span class="toc-text">7-5</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

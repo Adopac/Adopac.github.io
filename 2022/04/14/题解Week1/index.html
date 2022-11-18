@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>题解Week1 - Adament Houseboat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Adament,"> 
+    <meta name="description" content="
+7-1 String
+给定一个只含有小写字母的文本串，给定n个模式串，求每个模式串在文本串中的出现次数。
+
+我的做法是比较两个string：str和strr。 str是文本串，而strr是模式串 ,"> 
+    <meta name="author" content="Adopac"> 
+    <link rel="alternative" href="atom.xml" title="Adament Houseboat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/Rin-1.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="题解Week1 - Adament Houseboat"/>
+    <meta name="twitter:description" content="
+7-1 String
+给定一个只含有小写字母的文本串，给定n个模式串，求每个模式串在文本串中的出现次数。
+
+我的做法是比较两个string：str和strr。 str是文本串，而strr是模式串 ,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Adament Houseboat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="题解Week1 - Adament Houseboat"/>
+    <meta property="og:description" content="
+7-1 String
+给定一个只含有小写字母的文本串，给定n个模式串，求每个模式串在文本串中的出现次数。
+
+我的做法是比较两个string：str和strr。 str是文本串，而strr是模式串 ,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Adament Houseboat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week1</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">题解Week1</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
+<h1 id="7-1-String"><a href="#7-1-String" class="headerlink" title="7-1 String"></a>7-1 String</h1><blockquote>
+<p>给定一个只含有小写字母的文本串，给定<em>n</em>个模式串，求每个模式串在文本串中的出现次数。</p>
+</blockquote>
+<p>我的做法是比较两个string：<strong>str</strong>和<strong>strr</strong>。 <em>str是文本串，而strr是模式串</em> 。以strr的第一个字符作为标志，在str中找到strr的第一个字符，再分别比较str和strr的每一个字母，匹配上即sum++。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> N,flag;</span><br><span class="line">    string str,sstr;</span><br><span class="line">    cin &gt;&gt; N;</span><br><span class="line">    cin &gt;&gt; str;<span class="comment">//读入文本串</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> T=<span class="number">1</span>;T&lt;=N;T++)&#123;</span><br><span class="line">        cin &gt;&gt; sstr;<span class="comment">//读入模式串</span></span><br><span class="line">        <span class="type">int</span> num=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(sstr.<span class="built_in">size</span>()&gt;str.<span class="built_in">size</span>())&#123;</span><br><span class="line">        	cout &lt;&lt; <span class="number">0</span> &lt;&lt; endl;<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=str.<span class="built_in">size</span>()-sstr.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str[i]==sstr[<span class="number">0</span>])&#123;<span class="comment">//寻找str中与strr匹配的第一个字符</span></span><br><span class="line">                flag=<span class="number">1</span>;</span><br><span class="line">                <span class="type">int</span> ip=i;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> p=<span class="number">0</span>;p&lt;sstr.<span class="built_in">size</span>()&amp;&amp;ip&lt;str.<span class="built_in">size</span>();p++,ip++) <span class="keyword">if</span>(str[ip]!=sstr[p]) flag=<span class="number">0</span>;<span class="comment">//分别匹配每一个字符</span></span><br><span class="line">                <span class="keyword">if</span>(flag==<span class="number">1</span>) &#123;<span class="comment">//如果全匹配</span></span><br><span class="line">                	num++;</span><br><span class="line">				&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; num &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="7-2-区间"><a href="#7-2-区间" class="headerlink" title="7-2 区间"></a>7-2 区间</h1><blockquote>
+<p>有一个长为n的序列，一个区间的权值定义为这个区间内不同数字的个数，请在这个序列中找出两段不相交的区间使它们的权值的和最大</p>
+</blockquote>
+<ul>
+<li>可以注意到区间越长，权值只增不减，所以应该考虑最长的区间，即两个区间的长度就是原区间的长度。</li>
+</ul>
+<p>本题我本来用插板，这应该是正确的思路，但是在找前后区间权值时我用了暴力搜索导致时间耗费太长，所以应该考虑细微一点。插板移动时，有一个数分配给了前面的区间，同时后面的区间少了一个数。每一次移动应该只考虑增减而不是全盘考虑。</p>
+<p><em>我的代码中，tap即插板。插板的位置为正数第tap个数的后面，这样的话，每次变化的数就是a[tap]。</em></p>
+<ul>
+<li>同时我利用两个计数器memofront和memoback。<ul>
+<li>memofront为前段区间的计数器，实际上应该是判断器，这个memofront的值只有0或1，是因为这个是代表这个数有没有存在过。</li>
+<li>memoback为后段区间的计数器，由于后段区间的特殊性，memoback的意义是这个数出现的次数。只有当memoback[nu]&#x3D;&#x3D;1时，即减去的这个数为后半区间出现的唯一的数，才能把后面的权值减去1。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	cin &gt;&gt; N;</span><br><span class="line">	<span class="type">int</span> memofront[<span class="number">100005</span>],memoback[<span class="number">100005</span>];</span><br><span class="line">	<span class="type">int</span> a[N];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;N;i++) cin &gt;&gt; a[i];</span><br><span class="line">	<span class="type">int</span> tap=<span class="number">1</span>,maxweight=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(N==<span class="number">2</span>) &#123;cout &lt;&lt; <span class="number">2</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100005</span>;i++) &#123;memofront[i]=<span class="number">0</span>;memoback[i]=<span class="number">0</span>;&#125;</span><br><span class="line">	<span class="type">int</span> frontweight=<span class="number">0</span>,backweight=<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//第一次扫描，此时tap=1，</span></span><br><span class="line">    <span class="comment">//本人没事找事，下面两个for根本无意义，i就是0</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;tap;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(memofront[a[i]]==<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			memofront[a[i]]=<span class="number">1</span>;</span><br><span class="line">		        frontweight++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=tap;i&lt;N;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(memoback[a[i]]&gt;<span class="number">0</span>) &#123;memoback[a[i]]++;<span class="keyword">continue</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			memoback[a[i]]=<span class="number">1</span>;</span><br><span class="line">		        backweight++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> weight=frontweight+backweight;</span><br><span class="line">	<span class="comment">//开始移动插板</span></span><br><span class="line">	<span class="keyword">for</span>(tap=<span class="number">1</span>;tap&lt;N<span class="number">-1</span>;tap++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(memofront[a[tap]]==<span class="number">0</span>) &#123;frontweight++;memofront[a[tap]]++;&#125;<span class="comment">//如果加进来的数在前段没有出现过，就增加前段的权值，并将这个数标记。</span></span><br><span class="line">		<span class="keyword">if</span>(backweight&gt;<span class="number">0</span>)&#123;<span class="comment">//防止减到负数，应该不会出现这种情况。</span></span><br><span class="line">			<span class="keyword">if</span>(memoback[a[tap]]&gt;<span class="number">1</span>) memoback[a[tap]]--;<span class="comment">//减去出现次数。</span></span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (memoback[a[tap]]==<span class="number">1</span>) &#123;<span class="comment">//只有当memoback为1时才能减权值。</span></span><br><span class="line">				memoback[a[tap]]=<span class="number">0</span>;backweight--;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="type">int</span> weight=frontweight+backweight;</span><br><span class="line">		<span class="keyword">if</span>(weight&gt;maxweight) maxweight=weight;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; maxweight &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="7-3-小步点"><a href="#7-3-小步点" class="headerlink" title="7-3 小步点"></a>7-3 小步点</h1><blockquote>
+<p>众所周知，校园跑使用小步点软件时需要依次经过5个点位，一天Phenix发明了一个范围增强器，当Phenix距离点位R米的时就算经过了该点位，现在Phenix公里数已经达到了2公里，但是还剩两个点位需要经过，现在将校园抽象为一个二维坐标系，假设Phenix在（0,0）点，剩下的第一个点位在（d,n）,第二个在(2d,0)，由于Phenix超过了两公里的部分是一点也不想多跑，所以你需要计算在拥有范围增强器的基础上依次经过这两个点位的最短距离</p>
+</blockquote>
+<p><font color=grey> 本人由于数学不好，暴力求解了。。。</font></p>
+<p><font color=grey> 由于精度不高，能暴力求解。</font></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">distant</span><span class="params">(<span class="type">double</span> x,<span class="type">double</span> y,<span class="type">double</span> a,<span class="type">double</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sqrt</span>((x-a)*(x-a)+(y-b)*(y-b));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">double</span> R,d,n,S,min=<span class="number">9999</span>;</span><br><span class="line">    <span class="type">int</span> flag=<span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; R &gt;&gt; d &gt;&gt; n;</span><br><span class="line">    <span class="type">double</span> l1,l2;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">double</span> i=d-R;i&lt;d+R;i=i+<span class="number">0.01</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">double</span> j=n-R;j&lt;n+R;j=j+<span class="number">0.01</span>)&#123;<span class="comment">//遍历所有点</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">distant</span>(i,j,d,n)&lt;=R)&#123;</span><br><span class="line">				S=<span class="built_in">distant</span>(i,j,<span class="number">0</span>,<span class="number">0</span>)+<span class="built_in">distant</span>(i,j,<span class="number">2</span>*d,<span class="number">0</span>)-R;</span><br><span class="line">				<span class="keyword">if</span>(flag==<span class="number">0</span>) &#123;</span><br><span class="line">					min=S;</span><br><span class="line">					flag=<span class="number">1</span>;</span><br><span class="line">				&#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(S&lt;min) min=S;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.2lf&quot;</span>,min);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-4-分糖果"><a href="#7-4-分糖果" class="headerlink" title="7-4 分糖果"></a>7-4 分糖果</h1><blockquote>
+<p>现在有n个糖果和一群小朋友，第一个小朋友拥有这n个糖果，他现在有两种选择①分给第二个小朋友x个，x必须是n的约数，且x&lt;n②全部自己留着，第二个小朋友同样也是要么分自己拥有糖果数的约数个给下一个小朋友，要么全留着，以此类推。现在给出第一个小朋友的糖果数n，询问有多少种分法。</p>
+</blockquote>
+<p>这里我用的是递归，定义一个函数表示n个的分发，因为分发都是一样的解法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">func</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        sum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(n%i==<span class="number">0</span>) sum=sum+<span class="built_in">func</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> N;</span><br><span class="line">    cin &gt;&gt; N;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">func</span>(N)*<span class="number">2</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-5-找眼镜"><a href="#7-5-找眼镜" class="headerlink" title="7-5 找眼镜"></a>7-5 找眼镜</h1><blockquote>
+<p>一天Phenix的眼镜被俱乐部某个成员拿了，然后所有的俱乐部成员围成了一个圈，每个人都有个编号，按逆时针递增，而且每个人都有朝向（面向圈内或者圈外），Phenix需要询问编号为1的同学是谁拿的眼镜，但是俱乐部成员很团结不会出卖队友，只会告诉他，例如“眼镜藏在我左数第3个人的右数第1个人的左数第2个人那里”这种形式。现在给出每个人的朝向和名字，和1号同学给出的提示，你需要帮他找出是谁拿的眼镜。</p>
+</blockquote>
+<p>我用一个结构体fri来表示一个人的编号和名字，实际上顺着题目走就可以了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fri</span>&#123;</span><br><span class="line">    <span class="type">int</span> to;</span><br><span class="line">    string name;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,toward,num,point,pointend;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">fri</span> frien[n];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> T=<span class="number">0</span>;T&lt;n;T++)&#123;</span><br><span class="line">        cin &gt;&gt; frien[T].to &gt;&gt; frien[T].name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//以下开始找人</span></span><br><span class="line">    point = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> t=<span class="number">1</span>;t&lt;=m;t++)&#123;</span><br><span class="line">        toward=<span class="number">0</span>;num=<span class="number">0</span>;</span><br><span class="line">        cin &gt;&gt; toward &gt;&gt; num;</span><br><span class="line">        <span class="keyword">if</span>(toward==<span class="number">1</span>&amp;&amp;frien[point].to==<span class="number">1</span>) point=point-num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(toward==<span class="number">0</span>&amp;&amp;frien[point].to==<span class="number">0</span>) point=point-num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(toward==<span class="number">1</span>&amp;&amp;frien[point].to==<span class="number">0</span>) point=point+num;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(toward==<span class="number">0</span>&amp;&amp;frien[point].to==<span class="number">1</span>) point=point+num;</span><br><span class="line">        <span class="comment">//下面这两行是把溢出的point拉回来。</span></span><br><span class="line">        <span class="keyword">while</span>(point&lt;<span class="number">0</span>) point=point+n;</span><br><span class="line">        <span class="keyword">while</span>(point&gt;=n) point=point-n;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; frien[point].name;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-6-恰早饭"><a href="#7-6-恰早饭" class="headerlink" title="7-6 恰早饭"></a>7-6 恰早饭</h1><blockquote>
+<p>Phenix今天又有早八，由于他喜欢卡点到，所以只给自己留了T分钟的时间吃饭。鹏远餐厅有n道菜，每道菜有一个快乐值v和用餐时间t，意为Phenix可以花t分钟吃掉这道菜，然后获得v的快乐值。但是如果吃早饭的时间太长了，导致他迟到了他也会感到不开心，具体的，如果t &gt; T,他获得的快乐值就是v-(t-T)。现在请你计算Phenix吃掉某一道菜能获得的最大快乐值</p>
+</blockquote>
+<p><font color=grey><del>这道题一开始我以为是背包问题把我吓傻了，后来发现不是背包，而且特简单。</del></font></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,T;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; T;</span><br><span class="line">	<span class="type">int</span> time[n],happy[n];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) cin &gt;&gt; happy[i] &gt;&gt; time[i];</span><br><span class="line">	<span class="type">bool</span> flag=<span class="literal">false</span>;<span class="comment">//定义第一个最小数字</span></span><br><span class="line">    <span class="comment">//可以happymax=-999999(应该</span></span><br><span class="line">	<span class="type">int</span> happymax,happymagic;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(time[i]&lt;=T) happymagic=happy[i];</span><br><span class="line">		<span class="keyword">else</span> happymagic=happy[i]-(time[i]-T);</span><br><span class="line">		<span class="keyword">if</span>(flag==<span class="literal">false</span>) &#123;happymax=happymagic;flag=<span class="literal">true</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(happymagic&gt;happymax) happymax=happymagic;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; happymax &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b07feb5446e63296f5ad"
+        data-cs="5718dbac3072f68b17e9891e992406a87c412c71"
+        data-r="adopac.github.io"
+        data-o="Adopac"
+        data-a="Adopac"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7-1-String"><span class="toc-number">1.</span> <span class="toc-text">7-1 String</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-2-%E5%8C%BA%E9%97%B4"><span class="toc-number">2.</span> <span class="toc-text">7-2 区间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-3-%E5%B0%8F%E6%AD%A5%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">7-3 小步点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-4-%E5%88%86%E7%B3%96%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">7-4 分糖果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-5-%E6%89%BE%E7%9C%BC%E9%95%9C"><span class="toc-number">5.</span> <span class="toc-text">7-5 找眼镜</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-6-%E6%81%B0%E6%97%A9%E9%A5%AD"><span class="toc-number">6.</span> <span class="toc-text">7-6 恰早饭</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

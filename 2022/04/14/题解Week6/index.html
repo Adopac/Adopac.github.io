@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>题解Week6 - Adament Houseboat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Adament,"> 
+    <meta name="description" content="
+7-1
+给定一个字符串 text 和一个模式串 pattern，求 pattern 在text 中的出现次数。text 和 pattern 中的字符均为英语大写字母或小写字母。text中不同位置出,"> 
+    <meta name="author" content="Adopac"> 
+    <link rel="alternative" href="atom.xml" title="Adament Houseboat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/Rin-1.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="题解Week6 - Adament Houseboat"/>
+    <meta name="twitter:description" content="
+7-1
+给定一个字符串 text 和一个模式串 pattern，求 pattern 在text 中的出现次数。text 和 pattern 中的字符均为英语大写字母或小写字母。text中不同位置出,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Adament Houseboat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="题解Week6 - Adament Houseboat"/>
+    <meta property="og:description" content="
+7-1
+给定一个字符串 text 和一个模式串 pattern，求 pattern 在text 中的出现次数。text 和 pattern 中的字符均为英语大写字母或小写字母。text中不同位置出,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Adament Houseboat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">题解Week6</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">题解Week6</h1>
+        <div class="stuff">
+            <span>四月 14, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
+<h1 id="7-1"><a href="#7-1" class="headerlink" title="7-1"></a>7-1</h1><blockquote>
+<p>给定一个字符串 text 和一个模式串 pattern，求 pattern 在text 中的出现次数。text 和 pattern 中的字符均为英语大写字母或小写字母。text中不同位置出现的pattern 可重叠。</p>
+</blockquote>
+<p>KMP（都写在标题里了）</p>
+<p>下面两个视频帮助了我很多。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Px411z7Yo?from=search&seid=4518136118839100745&spm_id_from=333.337.0.0">Video1-bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hW411a7ys?from=search&seid=4518136118839100745&spm_id_from=333.337.0.0">Video2-bilibili</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">string pattern,text;</span><br><span class="line"><span class="type">int</span> findcatch=<span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> backvalue[<span class="number">100005</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getbackvaluetable</span><span class="params">(string pattern)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ins = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; pattern.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">		<span class="keyword">if</span> (pattern[i] == pattern[ins])&#123;</span><br><span class="line">			ins++;</span><br><span class="line">			backvalue[i] = ins;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (ins &gt; <span class="number">1</span>)</span><br><span class="line">				ins = backvalue[ins - <span class="number">1</span>];</span><br><span class="line">			backvalue[i] = ins;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">movetable</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n;i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line">		backvalue[i]=backvalue[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	backvalue[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">kmpsearch</span><span class="params">(string pattern,string text)</span></span>&#123;</span><br><span class="line">	<span class="built_in">getbackvaluetable</span>(pattern);</span><br><span class="line">	<span class="built_in">movetable</span>(pattern.<span class="built_in">size</span>());</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;text.<span class="built_in">size</span>())&#123;</span><br><span class="line">		<span class="keyword">if</span>(j==pattern.<span class="built_in">size</span>()<span class="number">-1</span>&amp;&amp;text[i]==pattern[j])&#123;</span><br><span class="line">			findcatch++;</span><br><span class="line">			j=backvalue[j];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(text[i]==pattern[j])&#123;</span><br><span class="line">			i++;j++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			j=backvalue[j];</span><br><span class="line">			<span class="keyword">if</span>(j==<span class="number">-1</span>)&#123;</span><br><span class="line">				i++;j++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	cin &gt;&gt; text;</span><br><span class="line">	cin &gt;&gt; pattern;</span><br><span class="line">	<span class="built_in">kmpsearch</span>(pattern,text);</span><br><span class="line">	cout &lt;&lt; findcatch &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="7-2"><a href="#7-2" class="headerlink" title="7-2"></a>7-2</h1><blockquote>
+<p>众所周知，互联网时代以来各大公司被“脱裤”的历史是一部五彩缤纷（误）的血泪史，给各大厂商造成了极大的经济损失。更为重要的是，由于有些用户在多个网站使用相同的用户名、密码，一旦一家网站被拖库，用户往往会遭受全方位的损失。为避免此情况，良心企业一般只在数据库中存储用户密码的<strong>哈希值</strong>——也就是根据特定规则产生的散列值，无法由此倒推出原密码。但这种方法也有一个缺点，即输入不同的密码有极小概率会得到一样的哈希值（我们称之为<strong>碰撞</strong>），从而被系统认定密码正确！现在你所在的公司采取如下方法产生密码字符串（长度至少为8，只包含大小写字母和数字）的哈希值：</p>
+<ol>
+<li>不区分字母的大小写，沿用16进制A代表10，B代表11……的规律，将原字符串视为一串36进制的数字</li>
+<li>将字符串平均划为4块，若无法平均划分，保证在前的分块不短于在后的分块，且长度差不超过1。如：长度26的字符串各分块长度为7、7、6、6，长度13的字符串各分块长度为4、3、3、3</li>
+<li>将每块的数字加和，取其个位数，四块取出的四个36进制数字顺次连接，得到一个四位36进制数字，即为该密码字符串的哈希值。<br>然而由于这种方式过于睿智，使得碰撞的几率奇高，你的任务就是为公司防范风险，在碰撞发生的时候给予示警！</li>
+</ol>
+</blockquote>
+<p>这道题按照题目要求一步一步来即可。</p>
+<ul>
+<li><p>首先要将密码打碎成三部分</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">breakstring</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;<span class="comment">//分成4部分的各部分长度</span></span><br><span class="line">	s1=s2=s3=s4=n/<span class="number">4</span>;</span><br><span class="line">	n=n-s1*<span class="number">4</span>;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;<span class="number">0</span>) &#123;s1++;n--;&#125;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;<span class="number">0</span>) &#123;s2++;n--;&#125;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;<span class="number">0</span>) &#123;s3++;n--;&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再把一个字符转化为36进制（我这种方法过于麻烦）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">turn10</span><span class="params">(<span class="type">char</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;n&lt;=<span class="string">&#x27;9&#x27;</span>) <span class="keyword">return</span> (<span class="type">int</span>)(n-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;n&lt;=<span class="string">&#x27;z&#x27;</span>) <span class="built_in">return</span> (<span class="type">int</span>)(n-<span class="string">&#x27;a&#x27;</span>)+<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;n&lt;=<span class="string">&#x27;Z&#x27;</span>) <span class="built_in">return</span> (<span class="type">int</span>)(n-<span class="string">&#x27;A&#x27;</span>)+<span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">char</span> <span class="title">turn36</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;=<span class="number">0</span>&amp;&amp;n&lt;=<span class="number">9</span>) <span class="keyword">return</span> (<span class="type">char</span>)(n+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n&gt;=<span class="number">10</span>&amp;&amp;n&lt;=<span class="number">35</span>) <span class="built_in">return</span> (<span class="type">char</span>)(n<span class="number">-10</span>+<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">turn36</span>(n<span class="number">-36</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过上面两个（三个）函数计算一串字符的哈希。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">string <span class="title">Hashing</span><span class="params">(string str)</span></span>&#123;</span><br><span class="line">	string num=<span class="string">&quot;0000&quot;</span>;</span><br><span class="line">	<span class="type">int</span> bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(str.<span class="built_in">size</span>()&lt;=<span class="number">4</span>) <span class="keyword">return</span> str;</span><br><span class="line">	<span class="built_in">breakstring</span>(str.<span class="built_in">size</span>());</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;s1;i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">0</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;s1+s2;i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">1</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;s1+s2+s3;i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">2</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;str.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">3</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>最后再做主程序即可。</li>
+<li>下面是我极为复杂的代码。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> s1,s2,s3,s4;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">users</span>&#123;</span><br><span class="line">	string name;</span><br><span class="line">	string passwd;</span><br><span class="line">	string hash;</span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;users&gt; usersdata;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">breakstring</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	s1=s2=s3=s4=n/<span class="number">4</span>;</span><br><span class="line">	n=n-s1*<span class="number">4</span>;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;<span class="number">0</span>) &#123;s1++;n--;&#125;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;<span class="number">0</span>) &#123;s2++;n--;&#125;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;<span class="number">0</span>) &#123;s3++;n--;&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">turn10</span><span class="params">(<span class="type">char</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;n&lt;=<span class="string">&#x27;9&#x27;</span>) <span class="keyword">return</span> (<span class="type">int</span>)(n-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;n&lt;=<span class="string">&#x27;z&#x27;</span>) <span class="built_in">return</span> (<span class="type">int</span>)(n-<span class="string">&#x27;a&#x27;</span>)+<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;n&lt;=<span class="string">&#x27;Z&#x27;</span>) <span class="built_in">return</span> (<span class="type">int</span>)(n-<span class="string">&#x27;A&#x27;</span>)+<span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">char</span> <span class="title">turn36</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&gt;=<span class="number">0</span>&amp;&amp;n&lt;=<span class="number">9</span>) <span class="keyword">return</span> (<span class="type">char</span>)(n+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(n&gt;=<span class="number">10</span>&amp;&amp;n&lt;=<span class="number">35</span>) <span class="built_in">return</span> (<span class="type">char</span>)(n<span class="number">-10</span>+<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">turn36</span>(n<span class="number">-36</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">string <span class="title">Hashing</span><span class="params">(string str)</span></span>&#123;</span><br><span class="line">	string num=<span class="string">&quot;0000&quot;</span>;</span><br><span class="line">	<span class="type">int</span> bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(str.<span class="built_in">size</span>()&lt;=<span class="number">4</span>) <span class="keyword">return</span> str;</span><br><span class="line">	<span class="built_in">breakstring</span>(str.<span class="built_in">size</span>());</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;s1;i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">0</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;s1+s2;i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">1</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;s1+s2+s3;i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">2</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	bnum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;str.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		bnum+=<span class="built_in">turn10</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	num[<span class="number">3</span>]=<span class="built_in">turn36</span>(bnum);</span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="comment">/* 	</span></span><br><span class="line"><span class="comment">	string str;</span></span><br><span class="line"><span class="comment">	cin &gt;&gt; str;</span></span><br><span class="line"><span class="comment">	cout &lt;&lt; Hashing(str) &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="type">int</span> abc;</span><br><span class="line">	cin &gt;&gt; abc;</span><br><span class="line">	<span class="type">char</span> operation;</span><br><span class="line">	string name,password;</span><br><span class="line">	<span class="type">bool</span> repeated;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=abc;i++)&#123;</span><br><span class="line">		cin &gt;&gt; operation;</span><br><span class="line">		repeated=<span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">if</span>(operation==<span class="string">&#x27;R&#x27;</span>)&#123;</span><br><span class="line">			cin &gt;&gt; name &gt;&gt; password;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;usersdata.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(name==usersdata[i].name)&#123;</span><br><span class="line">					cout &lt;&lt; <span class="string">&quot;Repeated!&quot;</span> &lt;&lt; endl;</span><br><span class="line">					repeated=<span class="literal">true</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(!repeated)&#123;</span><br><span class="line">				users newuser;</span><br><span class="line">				newuser.name=name;</span><br><span class="line">				newuser.passwd=password;</span><br><span class="line">				newuser.hash=<span class="built_in">Hashing</span>(password);</span><br><span class="line">				usersdata.<span class="built_in">push_back</span>(newuser);</span><br><span class="line">				cout &lt;&lt; <span class="string">&quot;Signed!&quot;</span> &lt;&lt; endl;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	    <span class="keyword">if</span>(operation==<span class="string">&#x27;L&#x27;</span>)&#123;</span><br><span class="line">			cin &gt;&gt; name &gt;&gt; password;</span><br><span class="line">			users compareduser;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;usersdata.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(name==usersdata[i].name)&#123;</span><br><span class="line">					compareduser=usersdata[i];</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(password==compareduser.passwd)&#123;</span><br><span class="line">				cout &lt;&lt; <span class="string">&quot;Success!&quot;</span> &lt;&lt; endl;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">if</span>(<span class="built_in">Hashing</span>(password)==compareduser.hash) cout &lt;&lt; <span class="string">&quot;Attention!&quot;</span> &lt;&lt; endl;</span><br><span class="line">				<span class="keyword">else</span> cout &lt;&lt; <span class="string">&quot;Failed!&quot;</span> &lt;&lt; endl;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h1 id="7-3"><a href="#7-3" class="headerlink" title="7-3"></a>7-3</h1><blockquote>
+<p>分别输入两个字符串A和B，A由多个小字符串组成（中间由非字母隔开），B是由字母组成的字符串。求出A中包含B的小字符串的个数（详细看样例），并且输出它。（不区分大小写）</p>
+</blockquote>
+<p>这也是一个KPM，直接照抄7-1，唯一的改动就是要把一串字符串给打碎分出来。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">	ch=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">if</span>(ch==<span class="string">&#x27;\n&#x27;</span>) &#123;<span class="keyword">if</span>(!stra.<span class="built_in">empty</span>())stras.<span class="built_in">push_back</span>(stra);<span class="keyword">break</span>;&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;z&#x27;</span>)&#123;</span><br><span class="line">		stra+=ch;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;Z&#x27;</span>)&#123;</span><br><span class="line">		stra+=ch+<span class="number">32</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!stra.<span class="built_in">empty</span>())stras.<span class="built_in">push_back</span>(stra);</span><br><span class="line">		stra.<span class="built_in">clear</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">vector&lt;string&gt;stras;</span><br><span class="line"><span class="type">int</span> backvalue[<span class="number">100005</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">backvaluetable</span><span class="params">(string pattern)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ins = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; pattern.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">		<span class="keyword">if</span> (pattern[i] == pattern[ins])&#123;</span><br><span class="line">			ins++;</span><br><span class="line">			backvalue[i] = ins;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (ins &gt; <span class="number">1</span>)</span><br><span class="line">				ins = backvalue[ins - <span class="number">1</span>];</span><br><span class="line">			backvalue[i] = ins;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=pattern.<span class="built_in">size</span>();i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line">		backvalue[i]=backvalue[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	backvalue[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">kmpsearch</span><span class="params">(string pattern,string text)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;text.<span class="built_in">size</span>())&#123;</span><br><span class="line">		<span class="keyword">if</span>(j==pattern.<span class="built_in">size</span>()<span class="number">-1</span>&amp;&amp;text[i]==pattern[j])&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(text[i]==pattern[j])&#123;</span><br><span class="line">			i++;j++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			j=backvalue[j];</span><br><span class="line">			<span class="keyword">if</span>(j==<span class="number">-1</span>)&#123;</span><br><span class="line">				i++;j++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> ch;</span><br><span class="line">	string stra;</span><br><span class="line">	string strb;</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">		ch=<span class="built_in">getchar</span>();</span><br><span class="line">		<span class="keyword">if</span>(ch==<span class="string">&#x27;\n&#x27;</span>) &#123;<span class="keyword">if</span>(!stra.<span class="built_in">empty</span>())stras.<span class="built_in">push_back</span>(stra);<span class="keyword">break</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;z&#x27;</span>)&#123;</span><br><span class="line">			stra+=ch;</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;Z&#x27;</span>)&#123;</span><br><span class="line">			stra+=ch+<span class="number">32</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(!stra.<span class="built_in">empty</span>())stras.<span class="built_in">push_back</span>(stra);</span><br><span class="line">			stra.<span class="built_in">clear</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cin&gt;&gt;strb;</span><br><span class="line">	<span class="built_in">backvaluetable</span>(strb);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;strb.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(strb[i]&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;strb[i]&lt;=<span class="string">&#x27;Z&#x27;</span>) strb[i]+=<span class="number">32</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;stras.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		sum+=<span class="built_in">kmpsearch</span>(strb,stras[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; sum &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b07feb5446e63296f5ad"
+        data-cs="5718dbac3072f68b17e9891e992406a87c412c71"
+        data-r="adopac.github.io"
+        data-o="Adopac"
+        data-a="Adopac"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7-1"><span class="toc-number">1.</span> <span class="toc-text">7-1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-2"><span class="toc-number">2.</span> <span class="toc-text">7-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-3"><span class="toc-number">3.</span> <span class="toc-text">7-3</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

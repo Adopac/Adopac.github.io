@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>POJ-1328 Radar Installation - Adament Houseboat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Adament,"> 
+    <meta name="description" content="
+# 题目
+
+Assume the coasting is an infinite straight line. Land is in one side of coasting, sea in th,"> 
+    <meta name="author" content="Adopac"> 
+    <link rel="alternative" href="atom.xml" title="Adament Houseboat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/Rin-1.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="POJ-1328 Radar Installation - Adament Houseboat"/>
+    <meta name="twitter:description" content="
+# 题目
+
+Assume the coasting is an infinite straight line. Land is in one side of coasting, sea in th,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Adament Houseboat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="POJ-1328 Radar Installation - Adament Houseboat"/>
+    <meta property="og:description" content="
+# 题目
+
+Assume the coasting is an infinite straight line. Land is in one side of coasting, sea in th,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Adament Houseboat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">POJ-1328 Radar Installation</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">POJ-1328 Radar Installation</h1>
+        <div class="stuff">
+            <span>七月 31, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr />
+# 题目
+
+<p>Assume the coasting is an infinite straight line. Land is in one side of coasting, sea in the other. Each small island is a point locating in the sea side. And any radar installation, locating on the coasting, can only cover d distance, so an island in the sea can be covered by a radius installation, if the distance between them is at most d.</p>
+<p>We use Cartesian coordinate system, defining the coasting is the x-axis. The sea side is above x-axis, and the land side below. Given the position of each island in the sea, and given the distance of the coverage of the radar installation, your task is to write a program to find the minimal number of radar installations to cover all the islands. Note that the position of an island is represented by its x-y coordinates.</p>
+<p><img src="https://s2.loli.net/2022/07/23/VYAIMCPwTj8dGoU.gif" alt="img">Figure A Sample Input of Radar Installations</p>
+<p>Input</p>
+<p>The input consists of several test cases. The first line of each case contains two integers n (1&lt;&#x3D;n&lt;&#x3D;1000) and d, where n is the number of islands in the sea and d is the distance of coverage of the radar installation. This is followed by n lines each containing two integers representing the coordinate of the position of each island. Then a blank line follows to separate the cases.</p>
+<p>The input is terminated by a line containing pair of zeros</p>
+<p>Output</p>
+<p>For each test case output one line consisting of the test case number followed by the minimal number of radar installations needed. “-1” installation means no solution for that case.</p>
+<p>Sample Input</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">3 2</span><br><span class="line">1 2</span><br><span class="line">-3 1</span><br><span class="line">2 1</span><br><span class="line"></span><br><span class="line">1 2</span><br><span class="line">0 2</span><br><span class="line"></span><br><span class="line">0 0</span><br></pre></td></tr></table></figure>
+
+<p>Sample Output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Case 1: 2</span><br><span class="line">Case 2: 1</span><br></pre></td></tr></table></figure>
+
+<hr />
+
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>将各个点“投影”到x轴上，这里的投影指的是在X轴上标记出能扫描到这个点的雷达的可选位置。实现来说就是这个区间上的雷达都能扫描到改点。于是这个题转换为了要多少点落在区间上可以符合题目情境。</p>
+<p>接下来，从左到右，如果一个区间的左边嵌入到了上一个区间的话，这两个区间只需要一个雷达即可满足。多个同理。所以我们从左遍历到右（这个区间左右的排列是区间的右端点的左右排列的）如果下一个区间的左边小于这个区间的右边，就可以忽视下一个区间不计算。</p>
+<hr />
+
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">interval</span>&#123;</span><br><span class="line">    <span class="type">double</span> start;</span><br><span class="line">    <span class="type">double</span> end;</span><br><span class="line">    <span class="type">bool</span> being_occupied;</span><br><span class="line">&#125;;</span><br><span class="line">vector&lt;interval&gt; inter;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(interval a,interval b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.end&lt;b.end;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="comment">//   freopen(&quot;TrueExample.txt&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line">  <span class="comment">//  freopen(&quot;Out.txt&quot;,&quot;w&quot;,stdout);</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> example=<span class="number">1</span>;;example++)&#123;</span><br><span class="line">        inter.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="type">int</span> n,d;</span><br><span class="line">        cin &gt;&gt; n &gt;&gt; d;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>&amp;&amp;d==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">bool</span> <span class="type">can_t</span>=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(d&lt;<span class="number">0</span>) <span class="type">can_t</span>=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="type">int</span> px,py;</span><br><span class="line">            cin &gt;&gt; px &gt;&gt; py;</span><br><span class="line">            <span class="keyword">if</span>(py&gt;d) <span class="type">can_t</span>=<span class="literal">true</span>;</span><br><span class="line">            interval I;</span><br><span class="line">            I.being_occupied=<span class="literal">false</span>;</span><br><span class="line">            I.start=(<span class="type">double</span>)px-<span class="built_in">sqrt</span>(d*d-py*py);</span><br><span class="line">            I.end=(<span class="type">double</span>)px+<span class="built_in">sqrt</span>(d*d-py*py);</span><br><span class="line">            inter.<span class="built_in">push_back</span>(I);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="type">can_t</span>)&#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Case &quot;</span> &lt;&lt; example &lt;&lt; <span class="string">&quot;: -1&quot;</span> &lt;&lt; endl;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(inter.<span class="built_in">begin</span>(),inter.<span class="built_in">end</span>(),cmp);</span><br><span class="line">        <span class="type">int</span> points=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;inter.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(inter[i].being_occupied) <span class="keyword">continue</span>;</span><br><span class="line">            inter[i].being_occupied=<span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;inter.<span class="built_in">size</span>();j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(inter[j].start&lt;=inter[i].end)&#123;</span><br><span class="line">                    inter[j].being_occupied=<span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(inter[j].start&gt;inter[i].end) <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            points++;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Case &quot;</span> &lt;&lt; example &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; points &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr />
+
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>来个劲爆的样例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line">2 5</span><br><span class="line">-3 4</span><br><span class="line">-6 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4 5</span><br><span class="line">-5 3</span><br><span class="line">-3 5</span><br><span class="line">2 3</span><br><span class="line">3 3</span><br><span class="line"></span><br><span class="line">20 8</span><br><span class="line">-20 7</span><br><span class="line">-18 6</span><br><span class="line">-5 8</span><br><span class="line">-21 8</span><br><span class="line">-15 7</span><br><span class="line">-17 5</span><br><span class="line">-1 5</span><br><span class="line">-2 3</span><br><span class="line">-9 6</span><br><span class="line">1 2</span><br><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">4 5</span><br><span class="line">5 6</span><br><span class="line">6 7</span><br><span class="line">7 8</span><br><span class="line">8 7</span><br><span class="line">9 6</span><br><span class="line">10 5</span><br><span class="line">0 0</span><br><span class="line"></span><br><span class="line">2 3</span><br><span class="line">0 2</span><br><span class="line">2 3</span><br><span class="line"></span><br><span class="line">2 3</span><br><span class="line">0 2</span><br><span class="line">1 3</span><br><span class="line"></span><br><span class="line">3 3</span><br><span class="line">1 2</span><br><span class="line">-3 2</span><br><span class="line">2 4</span><br><span class="line"></span><br><span class="line">8 5</span><br><span class="line">2 4</span><br><span class="line">-4 4</span><br><span class="line">-3 3</span><br><span class="line">-3 1</span><br><span class="line">-3 0</span><br><span class="line">-1 0</span><br><span class="line">0 5</span><br><span class="line">6 0</span><br><span class="line"></span><br><span class="line">3 0</span><br><span class="line">1 2</span><br><span class="line">-3 1</span><br><span class="line">2 1</span><br><span class="line"></span><br><span class="line">3 2</span><br><span class="line">1 2</span><br><span class="line">-3 1</span><br><span class="line">2 1</span><br><span class="line"></span><br><span class="line">1 2</span><br><span class="line">0 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2 3</span><br><span class="line">0 2</span><br><span class="line">2 3</span><br><span class="line"></span><br><span class="line">4 -5</span><br><span class="line">4 3</span><br><span class="line">4 3</span><br><span class="line">2 3</span><br><span class="line">6 -9</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3 -3</span><br><span class="line">1 2</span><br><span class="line">-3 2</span><br><span class="line">2 1</span><br><span class="line"></span><br><span class="line">6 2</span><br><span class="line">1 2</span><br><span class="line">1 2</span><br><span class="line">1 2</span><br><span class="line">-3 1</span><br><span class="line">2 1</span><br><span class="line">0 0</span><br><span class="line"></span><br><span class="line">1 2</span><br><span class="line">0 2</span><br><span class="line"></span><br><span class="line">2 3</span><br><span class="line">0 2</span><br><span class="line">1 3</span><br><span class="line"></span><br><span class="line">3 10</span><br><span class="line">1 10</span><br><span class="line">2 3</span><br><span class="line">4 5</span><br><span class="line"></span><br><span class="line">3 5</span><br><span class="line">1 10</span><br><span class="line">2 3</span><br><span class="line">4 5</span><br><span class="line"></span><br><span class="line">4 7</span><br><span class="line">1 10</span><br><span class="line">2 3</span><br><span class="line">4 5</span><br><span class="line">0 0</span><br><span class="line"></span><br><span class="line">3 9</span><br><span class="line">1 10</span><br><span class="line">2 3</span><br><span class="line">4 5</span><br><span class="line">0 0</span><br></pre></td></tr></table></figure>
+
+<p>来个劲爆的输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">case 1: 1</span><br><span class="line">case 2: 2</span><br><span class="line">case 3: 4</span><br><span class="line">case 4: 1</span><br><span class="line">case 5: 1</span><br><span class="line">case 6: -1</span><br><span class="line">case 7: 3</span><br><span class="line">case 8: -1</span><br><span class="line">case 9: 2</span><br><span class="line">case 10: 1</span><br><span class="line">case 11: 1</span><br><span class="line">case 12: -1</span><br><span class="line">case 13: -1</span><br><span class="line">case 14: 2</span><br><span class="line">case 15: 1</span><br><span class="line">case 16: 1</span><br><span class="line">case 17: 1</span><br><span class="line">case 18: -1</span><br><span class="line">case 19: -1</span><br><span class="line">case 20: -1</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b07feb5446e63296f5ad"
+        data-cs="5718dbac3072f68b17e9891e992406a87c412c71"
+        data-r="adopac.github.io"
+        data-o="Adopac"
+        data-a="Adopac"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AC%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">AC代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">3.</span> <span class="toc-text">其他</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
