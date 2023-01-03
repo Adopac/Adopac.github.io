@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>制作简易的Magisk模块来修改系统文件 - Adament Houseboat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Adament,"> 
+    <meta name="description" content="起因该模块的制作起因是因为MIUIeu本地化模块在MIUI14上兼容性较差，不支持恢复小爱同学语音唤醒。了解其模块如何工作后，发现只需要把相关的文件写入System文件夹即可。
+我手机已经解锁Sys,"> 
+    <meta name="author" content="Adopac"> 
+    <link rel="alternative" href="atom.xml" title="Adament Houseboat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/Rin-1.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="制作简易的Magisk模块来修改系统文件 - Adament Houseboat"/>
+    <meta name="twitter:description" content="起因该模块的制作起因是因为MIUIeu本地化模块在MIUI14上兼容性较差，不支持恢复小爱同学语音唤醒。了解其模块如何工作后，发现只需要把相关的文件写入System文件夹即可。
+我手机已经解锁Sys,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Adament Houseboat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="制作简易的Magisk模块来修改系统文件 - Adament Houseboat"/>
+    <meta property="og:description" content="起因该模块的制作起因是因为MIUIeu本地化模块在MIUI14上兼容性较差，不支持恢复小爱同学语音唤醒。了解其模块如何工作后，发现只需要把相关的文件写入System文件夹即可。
+我手机已经解锁Sys,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Adament Houseboat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://www.adament.xyz"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">制作简易的Magisk模块来修改系统文件</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">制作简易的Magisk模块来修改系统文件</h1>
+        <div class="stuff">
+            <span>一月 03, 2023</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>该模块的制作起因是因为MIUIeu本地化模块在MIUI14上兼容性较差，不支持恢复小爱同学语音唤醒。了解其模块如何工作后，发现只需要把相关的文件写入System文件夹即可。</p>
+<p>我手机已经解锁System分区，但是为了保险一点，还是用Magisk模块来操作。如果手机没有解锁System分区，则仅能通过模块来修改分区。</p>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><p>详细的模块文档在<a target="_blank" rel="noopener" href="https://topjohnwu.github.io/Magisk/guides.html">Developer Guides | Magisk</a>上有。</p>
+<p>在文档上有写一个Magisk模块的简易结构是</p>
+<pre><code>module.zip
+│
+├── META-INF
+│   └── com
+│       └── google
+│           └── android
+│               ├── update-binary      &lt;--- The module_installer.sh you downloaded
+│               └── updater-script     &lt;--- Should only contain the string &quot;#MAGISK&quot;
+│
+├── customize.sh                       &lt;--- (Optional, more details later)
+│                                           This script will be sourced by update-binary
+├── ...
+├── ...  /* The rest of module&#39;s files */
+│
+</code></pre>
+<p>而META-INF文件夹其实是不需要写的，下载Magisk提供的文件即可。</p>
+<blockquote>
+<ul>
+<li><code>update-binary</code>: Download the latest <a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/blob/master/scripts/module_installer.sh">module_installer.sh</a> and rename&#x2F;copy that script as <code>update-binary</code></li>
+<li><code>updater-script</code>: This file should only contain the string <code>#MAGISK</code></li>
+</ul>
+</blockquote>
+<p>如果我们要做一个修改System文件夹的Magisk模块，它的结构十分简单：</p>
+<pre><code>GetTrigger.zip
+.
+├── META-INF
+│   └── com
+│       └── google
+│           └── android
+│               ├── update-binary
+│               └── updater-script
+├── module.prop
+└── system
+</code></pre>
+<p>我们要修改的是system文件夹和module.prop。其中system文件夹放入需要的文件即可。我找到了实现小爱同学语音唤醒后直接丢进去就可以了。</p>
+<p>module.prop中描述模块的一些信息。module.prop遵循下列规则：</p>
+<pre><code>id=&lt;string&gt;
+name=&lt;string&gt;
+version=&lt;string&gt;
+versionCode=&lt;int&gt;
+author=&lt;string&gt;
+description=&lt;string&gt;
+updateJson=&lt;url&gt; (optional)
+</code></pre>
+<p>写完后打包，放到Magisk里安装即可。非常方便。如果修改出错。进入Recovery删除模块即可恢复。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>值得注意的是，修改build.prop请在根目录建立system.prop来修改：</p>
+<pre><code>ro.product.manufacturer=Xiaomi
+</code></pre>
+<p>如果模块修改不成功，请在根目录下的customize.sh中加入：</p>
+<pre><code>AUTOMOUNT=true
+</code></pre>
+<p>具体请阅读官方文档！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://www.adament.xyz/wp-content/uploads/2022/03/%E3%83%A4%E3%83%84%E3%83%A1%E7%A9%B4%EF%BC%88BGM%EF%BC%89.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b07feb5446e63296f5ad"
+        data-cs="5718dbac3072f68b17e9891e992406a87c412c71"
+        data-r="adopac.github.io"
+        data-o="Adopac"
+        data-a="Adopac"
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-number">2.</span> <span class="toc-text">修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">3.</span> <span class="toc-text">其他</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
